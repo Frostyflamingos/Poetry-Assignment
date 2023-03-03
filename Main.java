@@ -3,37 +3,65 @@ Taliesin Yip Hoi-Lee
 A program that predicts the type of poem inputted
 */
 
+
 import java.util.Scanner;
- class Main{
-   public static void main(String[]args){
-     int syllables = 0;
-     int words = 1;
-     Scanner input = new Scanner(System.in);
-     String sentence = input.nextLine();
-     //finding # of words in sentence
-    // for(int i = 0; i<sentence.length(); i++){
-      // if(sentence.charAt(i) == ' '){
-        // words = words + 1;}}
-     //System.out.println(words);
-     //for (int wordsAmount = 0; wordsAmount<words; wordsAmount++){
-     //Finding syllables in 1 word------------------------------
-    // String word = input.next();
-     //for (int i = 0; i < (word.length()); i++){
-       //if(word.charAt(i) == 'a' || word.charAt(i) == 'e' || word.charAt(i) == 'i' || word.charAt(i) == 'o' || word.charAt(i) == 'u' || word.charAt(i) == 'y'){
-      //   syllables = syllables + 1;}
-  // }//end of syllable counting loop}
-   //  if(word.charAt(word.length()-1) == 'e'){
-   //    syllables = syllables - 1;}
-     //if 2 vowels are next to each other (diphthong,triphthong)
+class Main{
+  public static void main(String[]args){
+//Variables----------------------------------------------
+    Scanner input = new Scanner(System.in);
+    boolean quit = false;
+    int lineTotal = 0;
+    int syllableTotal = 0;
+    String sentence;
+    String currentWord = "";
+    String prediction = " ";
+    String pattern = "";
+    String word = "";
+    int syllableAmount;
+    
+//-------------------------------------------------------
+//Main code----------------------------------------------
+    while(quit == false){//line inputing
+      lineTotal = lineTotal + 1;
+      sentence = input.nextLine();
+      sentence = sentence.toLowerCase();
+      syllableAmount = 0;
 
-    //if there is an 'le' or 'les' at the end of the word
-  //   if(word.charAt(word.length()-1) == 'e'){            
-   //     if(word.charAt(word.length()-2) == 'l'){
-     //     syllables = syllables + 1;}}
+      for(int i = 0; i < sentence.length(); i++){//separates words from sentences
 
-//--------------------------------------------------------------
+//counting for syllables loop
+  //last word
+
+//end of counting syllables
+      syllableTotal = syllableTotal + syllableAmount;
+      if(sentence.equals("quit") == false){
+        pattern = pattern + (syllableAmount + "") + " ";}
+//end of syllable counting
+    
+      if(sentence.equals("quit")){//stopping input with ("quit")
+        quit = true;
+        lineTotal = lineTotal - 1;}
 }
-     System.out.println(syllables);
-     input.close();//end of input
-   }
- }
+//-------------------------------------------------------
+//Output-------------------------------------------------
+    System.out.println(lineTotal + " lines");
+    System.out.println(syllableTotal + " syllables");
+    System.out.println(pattern);
+    //predicting the type of poem
+    if(lineTotal == 3){
+      if(pattern.equals("5 7 5 ")){
+        prediction = "Haiku";
+      }else if(syllableTotal > 42 && syllableTotal < 48){
+        prediction = "Sijo";}}
+    if(lineTotal == 5){
+      if(pattern.equals("5 7 5 7 7 ")){
+        prediction = "Tanka";//31 syllables
+      }else if(pattern.equals("2 4 6 8 2 ")){
+        prediction = "Cinquain";}}//22 syllables
+    if(pattern.equals("9 8 7 6 5 4 3 2 1")){
+      prediction = "Nonet";}//45 syllables
+    System.out.println(prediction);
+//--------------------------------------------------------
+    input.close();
+  }
+}
